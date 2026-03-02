@@ -4,7 +4,7 @@ import 'package:petAblumMobile/core/theme/app_colors.dart';
 import 'package:petAblumMobile/core/theme/app_custom_button.dart';
 import 'package:petAblumMobile/core/theme/app_fonts_style_suit.dart';
 import 'package:petAblumMobile/core/widgets/common_app_back_bar_scaffold.dart';
-import 'package:petAblumMobile/core/widgets/withdrawal_certification.dart';
+import 'package:petAblumMobile/features/presentation/pages/main/settings/withdrawal_certification.dart';
 
 class WithdrawalPage extends StatefulWidget {
   const WithdrawalPage({super.key});

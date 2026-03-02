@@ -6,7 +6,7 @@ import 'package:petAblumMobile/core/theme/app_text_semantic.dart';
 import 'package:petAblumMobile/core/widgets/app_text_field.dart';
 import 'package:petAblumMobile/core/widgets/common_app_bar_main_scaffold.dart';
 import 'package:petAblumMobile/core/widgets/pet_card.dart';
-import 'package:petAblumMobile/features/presentation/pages/main/settings_page.dart';
+import 'package:petAblumMobile/features/presentation/pages/main/settings/settings_page.dart';
 import 'package:petAblumMobile/features/presentation/pages/pet_crud/pet_list.dart';
 import 'package:petAblumMobile/core/theme/app_fonts_style_suit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
