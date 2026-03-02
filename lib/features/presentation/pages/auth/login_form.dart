@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:petAblumMobile/core/theme/app_button_theme.dart';
 import 'package:petAblumMobile/core/theme/app_colors.dart';
 import 'package:petAblumMobile/core/theme/app_fonts_style_suit.dart';
@@ -7,17 +8,19 @@ import 'package:petAblumMobile/core/widgets/app_text_field.dart';
 import 'package:petAblumMobile/core/widgets/common_app_back_bar_scaffold.dart';
 import 'package:petAblumMobile/features/presentation/pages/main/main_shell.dart';
 
-class IdLoginPage extends StatefulWidget {
+class IdLoginPage extends ConsumerStatefulWidget {
   const IdLoginPage({super.key});
 
   @override
-  State<IdLoginPage> createState() => _IdLoginPageState();
+  ConsumerState<IdLoginPage> createState() => _IdLoginPageState();
 }
 
-class _IdLoginPageState extends State<IdLoginPage> {
+class _IdLoginPageState extends ConsumerState<IdLoginPage> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
+
 
   @override
   void dispose() {

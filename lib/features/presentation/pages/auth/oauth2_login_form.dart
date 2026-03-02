@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:petAblumMobile/core/theme/app_colors.dart';
 import 'package:petAblumMobile/core/theme/app_common_button_styles.dart';
@@ -7,11 +8,11 @@ import 'package:petAblumMobile/core/theme/app_text_semantic.dart';
 import 'package:petAblumMobile/features/presentation/pages/auth/login_form.dart';
 import 'package:petAblumMobile/features/presentation/pages/auth/sign_up_page.dart';
 
-class Oauth2LoginPage extends StatelessWidget {
+class Oauth2LoginPage extends ConsumerWidget {
   const Oauth2LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
