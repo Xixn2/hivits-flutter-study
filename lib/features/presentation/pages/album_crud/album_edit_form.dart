@@ -250,7 +250,7 @@ class _AlbumEditFormPageState extends State<AlbumEditFormPage> {
           // 6. 하단 아이콘바
           if (!_showBackgroundPanel && !_showDrawingPanel && !_showModalSheet)
             Positioned(
-              left: 0, right: 0, bottom: 24,
+              left: 0, right: 0, bottom: 24 + MediaQuery.of(context).padding.bottom,
               child: Center(
                 child: EditorIconBar(
                   onBackgroundPressed: () {
