@@ -239,6 +239,9 @@ class _AlbumEditFormPageState extends State<AlbumEditFormPage> {
             bottom: _showBackgroundPanel ? 0 : -400,
             child: BackgroundTabletPanel(
               onClose: () => setState(() => _showBackgroundPanel = false),
+              onSave: () {
+                setState(() => _showBackgroundPanel = false);
+              },
               onColorChanged: (color) {
                 _applyState(_current.copyWith(
                   background: BackgroundState(color: color),
