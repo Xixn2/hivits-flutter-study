@@ -236,7 +236,7 @@ class _PhotoGalleryBottomSheetState extends State<PhotoGalleryBottomSheet> {
                                       ),
                                     )
                                   else
-                                    Image.network(
+                                    Image.asset(
                                       photo.imageUrl!,
                                       fit: BoxFit.cover,
                                       errorBuilder: (context, error, stackTrace) {

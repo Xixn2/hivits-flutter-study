@@ -120,7 +120,8 @@ class _BackgroundTabletPanelState extends State<BackgroundTabletPanel> {
   }
 
   Widget _buildTabs() {
-    return Padding(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
