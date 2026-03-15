@@ -8,6 +8,8 @@ import 'package:petAblumMobile/features/presentation/pages/album/album_grid_item
 import 'package:petAblumMobile/features/presentation/pages/album/album_common_actions.dart';
 import 'package:petAblumMobile/features/presentation/pages/album/album_search_page.dart';
 import 'package:petAblumMobile/features/presentation/pages/album_crud/album_edit_form.dart';
+import 'package:petAblumMobile/features/presentation/pages/album_crud/album_view.dart';
+import 'package:petAblumMobile/features/presentation/pages/album_crud/edit/album_create_sheet.dart';
 
 class AlbumPage extends StatefulWidget {
   const AlbumPage({super.key});
@@ -127,17 +129,14 @@ class _AlbumPageState extends State<AlbumPage> {
                       final album = filteredAlbums[index];
                       final id = album['id']!;
                       return AlbumGridItem(
+                        album: album,
                         title: album['title']!,
                         imageUrl: album['imageUrl']!,
                         isBookmarked: album['isBookmarked'] == 'true',
                         isSelectMode: _isSelectMode,
                         isSelected: _selectedIds.contains(id),
                         onSelectTap: () => _toggleSelection(id),
-                        onTap: () => _handleMenuTap(
-                          album['title']!,
-                          id,
-                          album['isBookmarked'] == 'true',
-                        ),
+                        onTap: () => _handleMenuTap(album['title']!, id, album['isBookmarked'] == 'true'),
                       );
                     },
                   );
@@ -174,7 +173,10 @@ class _AlbumPageState extends State<AlbumPage> {
           onPressed: _toggleSelectMode, // 선택 모드 진입
           style: TextButton.styleFrom(
             foregroundColor: AppColors.f05,
-            minimumSize: const Size(44, 44),
+            minimumSize: const Size(0, 44),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4,
+            ),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: Text(
@@ -235,9 +237,16 @@ class _AlbumPageState extends State<AlbumPage> {
           ),
         ),
         IconButton(
-          onPressed: _showSelectMenuSheet,
-          icon: const Icon(Icons.more_horiz, color: AppColors.f05, size: 24),
-        ),
+            onPressed: _showSelectMenuSheet,
+            icon: SvgPicture.asset(
+              'assets/system/icons/icon_kebab_menu.svg',
+              width: 24,
+              height: 24,
+              colorFilter: const ColorFilter.mode(
+                AppColors.f05,
+                BlendMode.srcIn,
+              ),
+            )        ),
       ],
     );
   }
@@ -274,10 +283,7 @@ class _AlbumPageState extends State<AlbumPage> {
 
   Widget _buildAddButton() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const AlbumEditFormPage()),
-      ),
+      onTap: () => showAlbumCreateSheet(context),
       child: Container(
         width: 40,
         height: 40,
@@ -300,15 +306,52 @@ class _AlbumPageState extends State<AlbumPage> {
     );
   }
 
+  void _navigateToView(Map<String, String> album, String id) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AlbumViewPage(
+          album: album,
+          onBookmarkToggle: () => _toggleBookmark(id),
+          onCopy: () => _duplicateAlbum(id),
+          onDelete: () => _handleDelete(id, album['title']!),
+        ),
+      ),
+    );
+  }
+
   void _handleMenuTap(String petName, String petId, bool isBookmarked) {
     showAlbumMenu(
       context: context,
       petName: petName,
       petId: petId,
       isBookmarked: isBookmarked,
+      onCopy: () => _duplicateAlbum(petId),
       onBookmarkToggle: () => _toggleBookmark(petId),
       onDelete: () => _handleDelete(petId, petName),
     );
+  }
+
+  void _duplicateAlbum(String petId) {
+    final original = albums.firstWhere((a) => a['id'] == petId);
+    final baseTitle = original['title']!;
+
+    // "제목(2)", "제목(3)" 형태로 중복 없이 번호 부여
+    int count = 2;
+    String newTitle = '$baseTitle($count)';
+    while (albums.any((a) => a['title'] == newTitle)) {
+      count++;
+      newTitle = '$baseTitle($count)';
+    }
+
+    setState(() {
+      albums.add({
+        'id': 'pet_${DateTime.now().millisecondsSinceEpoch}',
+        'title': newTitle,
+        'imageUrl': original['imageUrl']!,
+        'isBookmarked': 'false',
+      });
+    });
   }
 
   void _handleDelete(String petId, String petName) {
